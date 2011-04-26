@@ -1,1 +1,7 @@
-Tool for automatic site testing for error messages(or another snippets that can be found with regexp)
+Tool for automatic site testing for error messages(or another snippets that can be found with regexp).
+
+How does it work:
+1. In config file you need to specify the way your site will be scanned. The simplest one is scan it by links on the pages(you can also use module, that scans Drupal path table)
+2. You also need to specify type of regepx scanner or write you own. The important things each scanner shoud have are regexp pattern and check function, that returns result of matching to pattern.
+3. And of course you need to specify you site url.
+4. That's all folks. Now you can start testing from console or from your web browser.
