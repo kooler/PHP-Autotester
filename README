@@ -3,6 +3,9 @@ PHP Autotester
 Tool for automatic site testing for error messages(or another snippets that can be found with regexp).
 
 How does it work:
+Tool scans your site and makes site's map, then it goes through each page and checks with regexp pattern(error message pattern). If snippet has been found(some error has been thrown) test fails.
+
+How to configure it:
 1. In config file you need to specify the way your site will be scanned. The simplest one is scan it by links on the pages(you can also use module, that scans Drupal path table)
 2. You also need to specify type of regepx scanner or write you own. The important things each scanner shoud have are regexp pattern and check function, that returns result of matching to pattern.
 3. And of course you need to specify you site url.
