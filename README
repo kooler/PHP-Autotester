@@ -10,3 +10,6 @@ How to configure it:
 2. You also need to specify type of regepx scanner or write you own. The important things each scanner shoud have are regexp pattern and check function, that returns result of matching to pattern.
 3. And of course you need to specify you site url.
 4. That's all folks. Now you can start testing from console or from your web browser.
+
+How to run:
+There are two ways to run tests: launch it from console or from web browser. To run from console go to the folder with the tool and type "php scan.php", to run from browser just navigate to scan.php page (for ex. http://mytestsite.com/scan.php)
