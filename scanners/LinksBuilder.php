@@ -42,6 +42,9 @@ class LinksBuilder extends BaseScanner {
 		//Check the content of the page and add link and result to the array
 		$pageStatus = $this->getParser()->check($content);
 		if ($this->addLink($pageUrl, $pageStatus)) {
+			if ($this->consoleMode) {
+				echo $pageUrl.' ['.($pageStatus ? 'OK' : 'ERROR').']'."\n";
+			}
 			preg_match_all('/<a\s[^>]*href=([\"\']??)([^\" >]*?)\\1[^>]*>(.*)<\/a>/siU', $content, $pageLinks);
 			$pageLinks = $pageLinks[2];
 			foreach ($pageLinks as $pLink) {
@@ -87,6 +90,24 @@ class LinksBuilder extends BaseScanner {
 			}
 			$newLink .= $link;
 			$link = $newLink;
+		}
+	}
+	/**
+	 * Load links from cache
+	 */
+	function loadFromCache() {
+		if ($this->isCached()) {
+			$this->links = unserialize(file_get_contents(CACHE_FILE));
+			foreach ($this->links as $link=>$result) {
+				if ($this->consoleMode) print $link;
+				$content = $this->getPageContent($link);
+				if ($content == -1) continue;
+				//Check the content of the page and add link and result to the array
+				$result = $this->getParser()->check($content);
+				if ($this->consoleMode) echo ' ['.($result ? 'OK' : 'ERROR').']'."\n";
+				//Save the result
+				$this->links[$link] = $result;
+			}
 		}
 	}
 }
