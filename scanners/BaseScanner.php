@@ -83,4 +83,15 @@ abstract class BaseScanner {
 	function setConsoleMode($mode) {
 		$this->consoleMode = $mode;
 	}
+	/**
+	 * Check whether remote url exists
+	 */
+	function urlExists($url) {
+		$ch = curl_init();
+	    curl_setopt($ch, CURLOPT_URL, $url);
+	    // don't download content
+	    curl_setopt($ch, CURLOPT_NOBODY, 1);
+	    curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+	    return curl_exec($ch);
+	}
 }

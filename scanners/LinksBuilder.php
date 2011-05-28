@@ -37,10 +37,14 @@ class LinksBuilder extends BaseScanner {
 	 * @param $pageUrl url to the page
 	 */
 	private function extractPageLinks($pageUrl) {
-		$content = $this->getPageContent($pageUrl);
-		if ($content == -1) return;
-		//Check the content of the page and add link and result to the array
-		$pageStatus = $this->getParser()->check($content);
+		if ($this->urlExists($pageUrl)) {
+			$content = $this->getPageContent($pageUrl);
+			if ($content == -1) return;
+			//Check the content of the page and add link and result to the array
+			$pageStatus = $this->getParser()->check($content);
+		} else {
+			$pageStatus = false;
+		}
 		if ($this->addLink($pageUrl, $pageStatus)) {
 			if ($this->consoleMode) {
 				echo $pageUrl.' ['.($pageStatus ? 'OK' : 'ERROR').']'."\n";
