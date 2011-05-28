@@ -37,6 +37,9 @@ class LinksBuilder extends BaseScanner {
 	 * @param $pageUrl url to the page
 	 */
 	private function extractPageLinks($pageUrl) {
+		//If link was scanned before don't check it again
+		if ($this->linkWasScanned($pageUrl)) return;
+		//Check for server errors
 		if ($this->urlExists($pageUrl)) {
 			$content = $this->getPageContent($pageUrl);
 			if ($content == -1) return;
@@ -45,10 +48,12 @@ class LinksBuilder extends BaseScanner {
 		} else {
 			$pageStatus = false;
 		}
+		//Save link and result
 		if ($this->addLink($pageUrl, $pageStatus)) {
 			if ($this->consoleMode) {
 				echo $pageUrl.' ['.($pageStatus ? 'OK' : 'ERROR').']'."\n";
-			}
+			} 
+			//Get links on current one
 			preg_match_all('/<a\s[^>]*href=([\"\']??)([^\" >]*?)\\1[^>]*>(.*)<\/a>/siU', $content, $pageLinks);
 			$pageLinks = $pageLinks[2];
 			foreach ($pageLinks as $pLink) {

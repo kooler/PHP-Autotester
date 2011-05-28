@@ -14,7 +14,7 @@ abstract class BaseScanner {
 	/**
 	 * Output result like in console
 	 */
-	private $consoleMode = false;
+	protected $consoleMode = false;
 	/**
 	 * Start the scanning process
 	 */
@@ -25,6 +25,13 @@ abstract class BaseScanner {
 	 */
 	function getResult() {
 		return $this->links;
+	}
+	/**
+	 * Check whether link was scannes
+	 * @param $link link to check
+	 */
+	function linkWasScanned($link) {
+		return (array_search($link, $this->_linksList) !== FALSE);
 	}
 	/**
 	 * Add link to the array
