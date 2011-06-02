@@ -9,13 +9,20 @@ function __autoload($name) {
 
 include 'config.php';
 
+$siteUrl = SITE_URL;
+
 $consoleMode = !isset($_SERVER['HTTP_USER_AGENT']);
+
+//Check script params
+if ($consoleMode && !empty($argv[1])) {
+	$siteUrl = $argv[1];
+}
 
 //Configuration
 $scannerClass = SCANNER;
-$scanner = new $scannerClass(SITE_URL);
+$scanner = new $scannerClass($siteUrl);
 $scanner->setConsoleMode($consoleMode);
-$scanner->setSiteUrl(SITE_URL);
+$scanner->setSiteUrl($siteUrl);
 $parserClass = PARSER;
 $parser = new $parserClass();
 $scanner->setParser($parser);

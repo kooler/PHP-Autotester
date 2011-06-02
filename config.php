@@ -1,4 +1,4 @@
 <?php
 define('SCANNER', 'LinksBuilder');
 define('PARSER', 'DrupalError');
-define('SITE_URL', 'http://pickus');
+define('SITE_URL', 'http://mytestsite');

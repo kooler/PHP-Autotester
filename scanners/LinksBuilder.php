@@ -33,10 +33,22 @@ class LinksBuilder extends BaseScanner {
 		}
 	}
 	/**
+	 * Check link
+	 */
+	private function isValidLink($pLink) {
+		return (!empty($pLink) && $pLink != '#' 
+				&& (strpos($pLink, 'http://') === FALSE) 
+				&& (strpos($pLink, 'https://') === FALSE) 
+				&& (strpos($pLink, 'mailto:') === FALSE)
+				&& (strpos($pLink, 'javascript:') === FALSE)
+			   );
+	}
+	/**
 	 * Get links from page
 	 * @param $pageUrl url to the page
 	 */
 	private function extractPageLinks($pageUrl) {
+		$content = '';
 		//If link was scanned before don't check it again
 		if ($this->linkWasScanned($pageUrl)) return;
 		//Check for server errors
@@ -57,7 +69,7 @@ class LinksBuilder extends BaseScanner {
 			preg_match_all('/<a\s[^>]*href=([\"\']??)([^\" >]*?)\\1[^>]*>(.*)<\/a>/siU', $content, $pageLinks);
 			$pageLinks = $pageLinks[2];
 			foreach ($pageLinks as $pLink) {
-				if (!empty($pLink) && (strpos($pLink, 'http://') === FALSE)) {
+				if ($this->isValidLink($pLink)) {
 					$this->normalizeLink($pLink);
 					if (strpos($pLink, $this->siteUrl) == 0) {
 						$this->extractPageLinks($pLink);
